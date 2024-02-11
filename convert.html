@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to Hindi Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #translator {
+            width: 300px;
+        }
+        #watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<h1>English to Hindi Translator</h1>
+
+<form id="translator">
+    <label for="englishText">Enter English text:</label>
+    <input type="text" id="englishText" name="englishText" required>
+    <button type="button" onclick="translateText()">Translate</button>
+</form>
+
+<div id="translationResult"></div>
+
+<div id="watermark">AVSHESH CHAUHAN</div>
+
+<script>
+    function translateText() {
+        const englishText = document.getElementById('englishText').value;
+
+        // You can replace the following URL with a translation API endpoint
+        const translationAPI = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=';
+
+        fetch(translationAPI + encodeURIComponent(englishText))
+            .then(response => response.json())
+            .then(data => {
+                const hindiTranslation = data[0][0][0];
+                document.getElementById('translationResult').innerHTML = `<p><strong>Hindi Translation:</strong> ${hindiTranslation}</p>`;
+            })
+            .catch(error => {
+                console.error('Error during translation:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
